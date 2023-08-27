@@ -24,7 +24,7 @@ pub struct Config {
     pub env: Environment,
     /// All the config needed to launch an HTTP server.
     pub server: HttpServerConfig,
-    /// All the config needed to launch an HTTP server.
+    /// All the config needed to setup a database, regardless of the engine.
     pub db: DbConfig,
 }
 

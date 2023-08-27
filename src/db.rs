@@ -6,10 +6,10 @@ use anyhow::{Context, Result};
 use std::env;
 use std::time::Duration;
 
-/// Settings used to establish a connection with a database. All the values
-/// can be initialized with [`DbConfig::init_for()`] method, that uses
-/// environment variables to setup most of them, otherwise some have a
-/// default value.
+/// Settings used to establish a connection with a database, regardless of the engine.
+/// All the values can be initialized with [`DbConfig::init_for()`] method, that uses
+/// environment variables to setup all of them, otherwise all have default values,
+/// except the string connection.
 #[derive(Debug, Clone)]
 pub struct DbConfig {
     /// Database URL, initialized with the `DATABASE_URL` env
