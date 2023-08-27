@@ -1,0 +1,15 @@
+[package]
+name = "server-env-config"
+version = "0.1.0"
+edition = "2021"
+description = "Util types and functions to quickly and easy set up an HTTP server from environment variables"
+license = "MIT OR Apache-2.0"
+authors = [
+    "Mariano Ruiz <mrsarm@gmail.com>",
+]
+
+[dependencies]
+anyhow = "1.0"
+log = "0.4"
+strum = "0.25"
+strum_macros = "0.25"
