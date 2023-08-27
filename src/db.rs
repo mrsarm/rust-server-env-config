@@ -70,7 +70,7 @@ impl DbConfig {
     /// ```
     pub fn init_for(env: &Environment) -> Result<Self> {
         let url = env::var("DATABASE_URL").context("DATABASE_URL must be set")?;
-        let database_url = if *env == Environment::Test && !url.ends_with("_test") && !url.contains("?") {
+        let database_url = if *env == Environment::Test && !url.ends_with("_test") && !url.contains('?') {
             format!("{url}_test")
         } else {
             url
