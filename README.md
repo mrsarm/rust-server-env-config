@@ -19,13 +19,13 @@ use std::env;
 use server_env_config::Config;
 use server_env_config::env::Environment;
 
-// Settings should be actually set by the OS environment
-env::set_var("APP_ENV", "production");
+// Configurations should be actually set by the OS environment
+env::set_var("APP_ENV", "production");  // if not set, "local" is the default
 env::set_var("APP_URI", "api/v1");
 env::set_var("PORT", "8080");
 env::set_var("DATABASE_URL", "postgresql://user:pass@localhost/db");
 
-let result = Config::init(999);
+let result = Config::init(9999);        // 9999 will be used if "PORT" is not set
 assert!(result.is_ok());
 let config = result.unwrap();
 assert_eq!(config.env, Environment::Production);

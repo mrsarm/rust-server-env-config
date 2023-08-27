@@ -5,17 +5,17 @@ use crate::env::Environment;
 use crate::server::HttpServerConfig;
 use anyhow::Result;
 use log::{debug, log, Level};
-use std::env;
 use std::fmt::Debug;
 
-/// `Config` is responsible of the configuration of a "full" server,
-/// reading the settings from environment variables: app environment,
-/// HTTP server settings and database settings.
+/// `Config` is responsible of the configuration of a "full" server, reading the settings
+/// from environment variables: the deployment environment, the HTTP server settings
+/// and database settings.
 ///
-/// It does not setup anything related with the data layer
-/// other than the DB string connection, see the `app_state`
-/// module for that.
-/// The web layer configuration is configured by `app_server`.
+/// Once you have the Rust objects with all the basic information you need for your server,
+/// like the database connection (`DATABASE_URL`), the deployment environment (`APP_ENV`)
+/// or the port where to start the app (`PORT`), you can use the struct objects
+/// to use those values to start up your Actix server, Rocket server, or whatever
+/// server your app use.
 #[derive(Debug, Clone)]
 pub struct Config {
     /// The environment name chosen to run the app, normally
@@ -41,13 +41,13 @@ impl Config {
     /// use server_env_config::Config;
     /// use server_env_config::env::Environment;
     ///
-    /// // Settings should be actually set by the OS environment
-    /// env::set_var("APP_ENV", "production");
+    /// // Configurations should be actually set by the OS environment
+    /// env::set_var("APP_ENV", "production");  // if not set, "local" is the default
     /// env::set_var("APP_URI", "api/v1");
     /// env::set_var("PORT", "8080");
     /// env::set_var("DATABASE_URL", "postgresql://user:pass@localhost/db");
     ///
-    /// let result = Config::init(999);
+    /// let result = Config::init(9999);        // 9999 will be used if "PORT" is not set
     /// assert!(result.is_ok());
     /// let config = result.unwrap();
     /// assert_eq!(config.env, Environment::Production);
@@ -70,7 +70,7 @@ impl Config {
     ///
     /// See [`Config::init()`].
     pub fn init_for(default_port: u16, environment: Option<Environment>) -> Result<Config> {
-        debug!("⚙️  Configuring Backset ...");
+        debug!("⚙️  Configuring app ...");
         let env = match environment {
             Some(e) => e,
             None => Environment::init()?,
@@ -93,34 +93,12 @@ impl ToString for Config {
     /// set in another way, e.g. using a default value.
     fn to_string(&self) -> String {
         format!(
-r#"# The following items are the environment variables and its values from
-# the OS, from an .env file, or the default value used by **Backset**.
-#
-# APP_URL --> {}
-#
+r#"{}
 APP_ENV={}
-APP_URI="{}"
-HOST={}
-PORT={}
-DATABASE_URL="{}"
-MIN_CONNECTIONS={}
-MAX_CONNECTIONS={}
-ACQUIRE_TIMEOUT_MS={}
-IDLE_TIMEOUT_SEC={}
-TEST_BEFORE_ACQUIRE={}
-RUST_LOG="{}""#,
-            self.server.url,
+{}"#,
+            self.server.to_string(),
             self.env,
-            self.server.uri,
-            self.server.addr,
-            self.server.port,
-            self.db.database_url,
-            self.db.min_connections,
-            self.db.max_connections,
-            self.db.acquire_timeout.as_millis(),
-            self.db.idle_timeout.as_secs(),
-            self.db.test_before_acquire,
-            env::var("RUST_LOG").unwrap_or("".to_string())
+            self.db.to_string(),
         )
     }
 }

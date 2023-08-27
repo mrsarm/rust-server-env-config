@@ -7,7 +7,7 @@ use std::env;
 use std::time::Duration;
 
 /// Settings used to establish a connection with a database. All the values
-/// can be initialized with [`DbConfig::init_for`] method, that uses
+/// can be initialized with [`DbConfig::init_for()`] method, that uses
 /// environment variables to setup most of them, otherwise some have a
 /// default value.
 #[derive(Debug, Clone)]
@@ -37,12 +37,12 @@ impl DbConfig {
     /// attributes reading its corresponding environment variable,
     /// otherwise use a default value.
     ///
-    /// If `env` is [`Environment::Test`] the database string found
-    /// at `DATABASE_URL` that is set to the `self.database_url` is
-    /// appended first with the `_test` prefix, to avoid using
-    /// by mistake prod/local databases (unless the string DB already
-    /// ends with the prefix, or the string has connection arguments:
-    /// the `?` symbol in the string).
+    /// The database string is saved in `self.database_url` with the value found at
+    /// the `DATABASE_URL` environment value, that it's the only one required (there
+    /// is no default value). If `env` passed is [`Environment::Test`] the prefix
+    /// `_test` is added to the string connection, to avoid using by mistake prod/local
+    /// databases, unless the string already ends with the prefix, or the string has
+    /// connection arguments (the `?` symbol in the string).
     ///
     /// # Examples
     /// ```
@@ -50,7 +50,7 @@ impl DbConfig {
     /// use server_env_config::db::DbConfig;
     /// use server_env_config::env::Environment;
     ///
-    /// // Settings should be actually set by the OS environment
+    /// // Configurations should be actually set by the OS environment
     /// env::set_var("DATABASE_URL", "postgresql://user:pass@localhost/db");
     /// env::set_var("MAX_CONNECTIONS", "50");
     /// env::set_var("IDLE_TIMEOUT_SEC", "60");
@@ -87,5 +87,28 @@ impl DbConfig {
             idle_timeout,
             test_before_acquire,
         })
+    }
+}
+
+impl ToString for DbConfig {
+    /// This `to_string()` implementation prints out all the config
+    /// values in `.env` format, using as key the environment variable
+    /// used to set-up the config, even if the configuration was
+    /// set in another way, e.g. using a default value.
+    fn to_string(&self) -> String {
+        format!(
+r#"DATABASE_URL="{}"
+MIN_CONNECTIONS={}
+MAX_CONNECTIONS={}
+ACQUIRE_TIMEOUT_MS={}
+IDLE_TIMEOUT_SEC={}
+TEST_BEFORE_ACQUIRE={}"#,
+            self.database_url,
+            self.min_connections,
+            self.max_connections,
+            self.acquire_timeout.as_millis(),
+            self.idle_timeout.as_secs(),
+            self.test_before_acquire,
+        )
     }
 }

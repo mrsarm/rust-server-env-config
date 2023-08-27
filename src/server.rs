@@ -36,3 +36,22 @@ impl HttpServerConfig {
         Ok(HttpServerConfig { addr, port, uri, url })
     }
 }
+
+impl ToString for HttpServerConfig {
+    /// This `to_string()` implementation prints out all the config
+    /// values in `.env` format, using as key the environment variable
+    /// used to set-up the config, even if the configuration was
+    /// set in another way, e.g. using a default value.
+    fn to_string(&self) -> String {
+        format!(
+r#"# APP_URL --> {}
+APP_URI="{}"
+HOST={}
+PORT={}"#,
+            self.url,
+            self.uri,
+            self.addr,
+            self.port,
+        )
+    }
+}
