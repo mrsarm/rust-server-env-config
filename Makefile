@@ -1,4 +1,4 @@
-.PHONY: clean build build-test all release test lint fmt-check docs
+.PHONY: clean build build-test release test lint fmt-check docs
 .DEFAULT_GOAL := build
 
 clean:
