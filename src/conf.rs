@@ -73,7 +73,7 @@ impl Config {
         debug!("⚙️  Configuring Backset ...");
         let env = match environment {
             Some(e) => e,
-            None => Environment::init()?
+            None => Environment::init()?,
         };
         let log_level = match env {
             Environment::Test => Level::Debug,
@@ -121,6 +121,6 @@ RUST_LOG="{}""#,
             self.db.idle_timeout.as_secs(),
             self.db.test_before_acquire,
             env::var("RUST_LOG").unwrap_or("".to_string())
-            )
+        )
     }
 }

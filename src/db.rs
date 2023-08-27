@@ -6,7 +6,6 @@ use anyhow::{Context, Result};
 use std::env;
 use std::time::Duration;
 
-
 /// Settings used to establish a connection with a database. All the values
 /// can be initialized with [`DbConfig::init_for`] method, that uses
 /// environment variables to setup most of them, otherwise some have a

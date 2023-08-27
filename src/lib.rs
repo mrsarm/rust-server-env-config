@@ -67,8 +67,8 @@ pub fn env_bool(env_name: &'static str, default_value: bool) -> Result<bool> {
 /// assert!(env_parsable::<i64>("LONG_ENV", 1).is_err());
 /// ```
 pub fn env_parsable<A: FromStr>(env_name: &'static str, default_value: A) -> Result<A>
-    where
-        <A as FromStr>::Err: Debug,
+where
+    <A as FromStr>::Err: Debug,
 {
     var(env_name)
         .map(|v| {
@@ -77,5 +77,3 @@ pub fn env_parsable<A: FromStr>(env_name: &'static str, default_value: A) -> Res
         })
         .unwrap_or(Ok(default_value))
 }
-
-
