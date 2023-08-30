@@ -63,7 +63,7 @@ impl Config {
     /// // APP_URI="api/v1"
     /// // HOST=127.0.0.1
     /// // PORT=8080
-    /// // APP_ENV=local
+    /// // APP_ENV=production
     /// // DATABASE_URL="postgresql://user:pass@localhost/db"
     /// // MIN_CONNECTIONS=1
     /// // ...
