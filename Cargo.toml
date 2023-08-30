@@ -1,6 +1,6 @@
 [package]
 name = "server-env-config"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "Util types and functions to quickly and easy set up an HTTP server from environment variables"
 license = "MIT OR Apache-2.0"
