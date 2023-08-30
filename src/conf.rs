@@ -57,6 +57,16 @@ impl Config {
     /// // Some settings have default values if env variables are not set
     /// assert_eq!(config.db.min_connections, 1);
     /// assert_eq!(config.db.max_connections, 10);
+    /// // The `to_string()` method prints out all variables in .env format
+    /// println!("{}", config.to_string());
+    /// // # APP_URL --> http://127.0.0.1:8080/api/v1/
+    /// // APP_URI="api/v1"
+    /// // HOST=127.0.0.1
+    /// // PORT=8080
+    /// // APP_ENV=local
+    /// // DATABASE_URL="postgresql://user:pass@localhost/db"
+    /// // MIN_CONNECTIONS=1
+    /// // ...
     /// ```
     pub fn init(default_port: u16) -> Result<Config> {
         Self::init_for(default_port, None)

@@ -7,6 +7,15 @@ license = "MIT OR Apache-2.0"
 authors = [
     "Mariano Ruiz <mrsarm@gmail.com>",
 ]
+readme = "README.md"
+homepage = "https://github.com/mrsarm/rust-server-env-config"
+repository = "https://github.com/mrsarm/rust-server-env-config"
+categories = ["config", "data-structures", "settings", "env", "environment"]
+exclude = [
+    ".github/workflows/",
+    ".gitignore",
+    ".editorconfig",
+]
 
 [dependencies]
 anyhow = "1.0"
