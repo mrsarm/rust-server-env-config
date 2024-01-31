@@ -19,7 +19,7 @@ pub enum Environment {
 
 impl Environment {
     /// Get the value from the environment variable `APP_ENV`.
-    /// It raise an error if the string doesn't match a possible environment.
+    /// It raises an error if the string doesn't match a possible environment.
     /// # Examples
     /// ```
     /// use std::env;

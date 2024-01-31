@@ -7,7 +7,7 @@ use anyhow::Result;
 use log::{debug, log, Level};
 use std::fmt::Debug;
 
-/// `Config` is responsible of the configuration of a "full" server, reading the settings
+/// `Config` is responsible for the configuration of a "full" server, reading the settings
 /// from environment variables: the deployment environment, the HTTP server settings
 /// and database settings.
 ///
